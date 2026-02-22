@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>News Summary AI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <main class="container">
+    <section class="chat-card">
+
+      <header class="chat-header">
+        <div class="logo">📰</div>
+        <div>
+          <h1>News Summary AI</h1>
+          <p>Ringkasan berita cepat & profesional</p>
+        </div>
+      </header>
+
+      <div id="chat-box" class="chat-box">
+        <div class="message bot">
+          Halo 👋  
+          Aku siap merangkum berita untukmu.  
+          <br><br>
+          Coba ketik:
+          <b>“Ringkas berita teknologi hari ini”</b>
+        </div>
+      </div>
+
+      <form id="chat-form" class="chat-input">
+        <input
+          type="text"
+          id="user-input"
+          placeholder="Tulis permintaan ringkasan berita..."
+          autocomplete="off"
+          required
+        />
+        <button type="submit">➤</button>
+      </form>
+
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

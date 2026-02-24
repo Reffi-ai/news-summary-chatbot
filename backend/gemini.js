@@ -1,21 +1,31 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+import 'dotenv/config';
 
 export async function generateResponse(prompt, history) {
-  const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash"
+  const contents = history ? [...history] : [];
+
+  contents.push({
+    role: "user",
+    parts: [{ text: prompt }]
   });
 
-  const chat = model.startChat({
-    history: history ?? [],
-    generationConfig: {
-      temperature: 0.7
+  const response = await fetch(
+    "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=" +
+      process.env.GEMINI_API_KEY,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ contents })
     }
-  });
+  );
 
-  const result = await chat.sendMessage(prompt);
-  const response = result.response;
+  const data = await response.json();
 
-  return response.text();
+  if (!response.ok) {
+    console.error("Gemini API error:", data);
+    throw new Error(data.error?.message || "Gemini API error");
+  }
+
+  return data.candidates[0].content.parts[0].text;
 }
